@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Field Team Batches";
+    var batches = ViewBag.Batches as List<List<TESTER.Models.ServiceRequest>> ?? new List<List<TESTER.Models.ServiceRequest>>();
+}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">Field Team Batches</h2>
+        <p class="text-muted">Requests grouped by <strong>location</strong>, max <strong>3 per team</strong>.</p>
+    </div>
+
+    @if (batches.Any())
+    {
+        for (int i = 0; i < batches.Count; i++)
+        {
+            var batch = batches[i];
+            var location = batch.FirstOrDefault()?.Location ?? "Unknown";
+
+            <div class="card shadow-sm mb-4 border-start border-primary border-4">
+                <div class="card-header bg-primary text-white fw-bold">
+                    Team @(i + 1) – @location (@batch.Count request(s))
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <thead class="table-light small text-uppercase">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var r in batch)
+                                {
+                                    <tr>
+                                        <td><strong>@r.Id</strong></td>
+                                        <td class="text-truncate" style="max-width:300px;">@r.Description</td>
+                                        <td>
+                                            <span class="badge @(r.Priority <= 2 ? "bg-danger" : r.Priority == 3 ? "bg-warning text-dark" : "bg-success")">
+                                                @r.Priority
+                                            </span>
+                                        </td>
+                                        <td><span class="badge bg-info">@r.Status</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info text-center shadow-sm">
+            No requests to batch yet. Submit some with locations!
+        </div>
+    }
+
+    <div class="text-center mt-4">
+        <a asp-action="ServiceRequests" class="btn btn-outline-primary">
+            Submit New Request
+        </a>
+        <a asp-action="ViewServiceRequests" class="btn btn-outline-success ms-2">
+            View All Requests
+        </a>
+    </div>
+</div>

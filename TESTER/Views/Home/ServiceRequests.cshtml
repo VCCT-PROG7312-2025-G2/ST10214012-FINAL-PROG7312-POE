@@ -1,18 +1,15 @@
 ﻿@{
     ViewBag.Title = "Submit Service Request";
 }
-
 <div class="container py-5" style="max-width: 600px;">
-
     <!-- Header -->
     <div class="mb-5 text-center">
-        <h2 class="fw-bold text-primary"><i class="bi bi-wrench me-2"></i>Submit Service Request</h2>
+        <h2 class="fw-bold text-primary">Submit Service Request</h2>
         <p class="text-muted small mb-0">Fill out the form below so we can address your request efficiently.</p>
     </div>
 
     <!-- Form Section -->
     <form asp-action="ServiceRequests" method="post" class="request-form p-4 border rounded-3 shadow-sm bg-white">
-
         <!-- Description -->
         <div class="mb-4">
             <label for="description" class="form-label fw-semibold">Description</label>
@@ -43,10 +40,17 @@
             <div class="form-text small text-muted">Set 1 for urgent issues and 5 for low priority.</div>
         </div>
 
-        <!-- Submit Button -->
+        <!-- LOCATION FIELD (NEW) -->
+        <div class="mb-4">
+            <label for="location" class="form-label fw-semibold">Location (Suburb)</label>
+            <input type="text" id="location" name="location" class="form-control form-control-lg" required
+                   placeholder="e.g. Sea Point, Khayelitsha, CBD" />
+            <div class="form-text small text-muted">Helps group nearby requests for faster service.</div>
+        </div>
+    <!-- Submit Button -->
         <div class="d-grid">
             <button type="submit" class="btn btn-outline-primary btn-lg fw-semibold">
-                <i class="bi bi-send me-2"></i>Submit Request
+                Submit Request
             </button>
         </div>
     </form>
@@ -54,10 +58,20 @@
     <!-- Success Message -->
     @if (ViewBag.Message != null)
     {
-        <div class="alert alert-success text-center mt-4 rounded-3" role="alert">
-            <i class="bi bi-check-circle me-2"></i>@ViewBag.Message
+        <div class="alert alert-success text-center mt-4 rounded-3 shadow-sm" role="alert">
+            @ViewBag.Message
         </div>
     }
+
+    <!-- Quick Links -->
+    <div class="text-center mt-4">
+        <a asp-action="ViewServiceRequests" class="btn btn-outline-success btn-sm me-2">
+            View All Requests
+        </a>
+        <a asp-action="BatchRequests" class="btn btn-outline-warning btn-sm">
+            View Field Batches (MST)
+        </a>
+    </div>
 </div>
 
 <style>
@@ -89,4 +103,8 @@
             color: #fff;
             border-color: #0d6efd;
         }
+
+    .btn-sm {
+        font-size: 0.85rem;
+    }
 </style>

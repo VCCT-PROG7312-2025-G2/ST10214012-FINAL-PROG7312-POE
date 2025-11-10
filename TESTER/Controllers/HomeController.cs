@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+ï»¿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
@@ -27,7 +27,7 @@ namespace TESTER.Controllers
                 Title = "Cape Town Carnival",
                 Date = new DateTime(2025, 3, 15),
                 Category = "Culture",
-                Description = "A vibrant parade along Green Point Fan Walk, featuring dancers, musicians, and elaborate floats that celebrate Cape Town’s diverse communities and heritage."
+                Description = "A vibrant parade along Green Point Fan Walk, featuring dancers, musicians, and elaborate floats that celebrate Cape Townâ€™s diverse communities and heritage."
             },
             new Event
             {
@@ -67,7 +67,7 @@ namespace TESTER.Controllers
                 Title = "Cape Town International Jazz Festival",
                 Date = new DateTime(2025, 4, 25),
                 Category = "Music",
-                Description = "Africa’s grandest jazz gathering held at the Cape Town International Convention Centre (CTICC), featuring world-renowned and local jazz musicians."
+                Description = "Africaâ€™s grandest jazz gathering held at the Cape Town International Convention Centre (CTICC), featuring world-renowned and local jazz musicians."
             },
             new Event
             {
@@ -99,15 +99,15 @@ namespace TESTER.Controllers
                 Title = "Community Beach Clean-Up",
                 Date = new DateTime(2025, 10, 20),
                 Category = "Environment",
-                Description = "Organised by local volunteers at Muizenberg and Bloubergstrand beaches, this initiative focuses on keeping Cape Town’s coastlines clean and plastic-free."
+                Description = "Organised by local volunteers at Muizenberg and Bloubergstrand beaches, this initiative focuses on keeping Cape Townâ€™s coastlines clean and plastic-free."
             },
             new Event
             {
                 Id = 12,
-                Title = "Heritage Day Celebration at Company’s Garden",
+                Title = "Heritage Day Celebration at Companyâ€™s Garden",
                 Date = new DateTime(2025, 9, 24),
                 Category = "Culture",
-                Description = "An outdoor celebration in Company’s Garden, Cape Town, featuring local cuisine, dance performances, and exhibitions highlighting South Africa’s heritage and unity."
+                Description = "An outdoor celebration in Companyâ€™s Garden, Cape Town, featuring local cuisine, dance performances, and exhibitions highlighting South Africaâ€™s heritage and unity."
             },
             new Event
             {
@@ -148,9 +148,10 @@ namespace TESTER.Controllers
         private static ServiceRequestHeap requestHeap = new ServiceRequestHeap();
         private static ServiceRequestGraph requestGraph = new ServiceRequestGraph();
         private static LinkedList<ServiceRequest> linkedRequests = new LinkedList<ServiceRequest>();
-
-        // RED-BLACK TREE
         private static ServiceRequestRBTree rbTree = new ServiceRequestRBTree();
+
+        // ----------------- MST FOR BATCHING -----------------
+        private static ServiceRequestMST mst = new ServiceRequestMST();
 
         // ----------------- HOME -----------------
         public IActionResult Index() => View();
@@ -258,7 +259,7 @@ namespace TESTER.Controllers
         }
 
         [HttpPost]
-        public IActionResult ServiceRequests(string description, string category, int priority, int? dependsOnId)
+        public IActionResult ServiceRequests(string description, string category, int priority, string location, int? dependsOnId)
         {
             int newId = (int)(DateTime.Now.Ticks % int.MaxValue);
             var newRequest = new ServiceRequest
@@ -271,7 +272,8 @@ namespace TESTER.Controllers
                 RequestDate = DateTime.Now,
                 Status = "Pending",
                 Priority = priority,
-                Category = category
+                Category = category,
+                Location = location ?? "Unknown"
             };
 
             AddServiceRequest(newRequest);
@@ -293,9 +295,7 @@ namespace TESTER.Controllers
         public IActionResult TrackServiceRequest(int id)
         {
             var request = requestBST.Search(id);
-
-            // Always show current view with sort
-            ViewBag.AllRequests = GetSortedRequests("priority"); // default
+            ViewBag.AllRequests = GetSortedRequests("priority");
             ViewBag.RequestGraph = requestGraph;
             ViewBag.CurrentSort = "priority";
 
@@ -327,7 +327,36 @@ namespace TESTER.Controllers
             return View();
         }
 
-        // Helper to get sorted list based on sort parameter
+        // ----------------- BATCH REQUESTS (MST) -----------------
+        public IActionResult BatchRequests()
+        {
+            var allRequests = requestHeap.GetAll().ToList();
+
+            // Group by Location
+            var locationGroups = allRequests
+                .GroupBy(r => r.Location)
+                .OrderBy(g => g.Key)
+                .ToList();
+
+            var batches = new List<List<ServiceRequest>>();
+
+            foreach (var group in locationGroups)
+            {
+                var requests = group.ToList();
+
+                // Split into batches of max 3
+                for (int i = 0; i < requests.Count; i += 3)
+                {
+                    var batch = requests.Skip(i).Take(3).ToList();
+                    batches.Add(batch);
+                }
+            }
+
+            ViewBag.Batches = batches;
+            return View();
+        }
+
+        // ----------------- HELPERS -----------------
         private List<ServiceRequest> GetSortedRequests(string sort)
         {
             return sort == "id"
@@ -335,7 +364,6 @@ namespace TESTER.Controllers
                 : requestHeap.GetAll().OrderBy(r => r.Priority).ToList();
         }
 
-        // ----------------- HELPER -----------------
         public void AddServiceRequest(ServiceRequest req)
         {
             linkedRequests.AddLast(req);

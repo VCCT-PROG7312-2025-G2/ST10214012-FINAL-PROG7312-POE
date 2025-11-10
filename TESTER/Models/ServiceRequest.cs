@@ -13,5 +13,6 @@ namespace TESTER.Models
         public string Status { get; set; } = "Pending";  // Pending, In Progress, Completed
         public int Priority { get; set; } = 0;           // Higher = urgent
         public string Category { get; set; }            // Optional, for tree grouping
+        public string Location { get; set; }
     }
 }

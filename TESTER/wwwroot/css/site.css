@@ -1,0 +1,178 @@
+/* --- Base --- */
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #E9EEFC;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* --- Cards and Sections --- */
+.card-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* --- Container padding --- */
+.container {
+    padding: 2rem 1rem;
+    max-width: 900px;
+}
+
+/* --- Form Controls / Search Bar --- */
+.form-control {
+    background-color: #fff;
+    border: 1px solid #d1d7e0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+    .form-control:focus {
+        border-color: #0d6efd;
+    }
+
+/* --- Recently Viewed --- */
+.recent-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.recent-item {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    min-width: 200px;
+    flex: 1 1 220px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+    .recent-item:hover {
+        background-color: #fdfdfd;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+    }
+
+.recent-icon {
+    background-color: #eaf0ff;
+    color: #0d6efd;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+}
+
+/* --- Text Styling --- */
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.badge.bg-success-subtle {
+    background-color: #e9f8ed;
+}
+
+.badge.bg-primary-subtle {
+    background-color: #eaf0ff;
+}
+
+/* --- Buttons --- */
+.refresh-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+    background-color: #fff;
+    height: 38px;
+    width: 38px;
+    transition: all 0.2s ease-in-out;
+}
+
+    .refresh-btn:hover {
+        background-color: #d0e2ff;
+        border-color: #0b5ed7;
+        color: #0b5ed7;
+    }
+
+.back-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 8px;
+    background-color: #0d6efd;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.875rem;
+}
+
+    .back-btn:hover {
+        background-color: #0b5ed7;
+        color: #fff;
+        text-decoration: none;
+    }
+
+/* --- Event Details --- */
+.event-details-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 25px 30px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.event-title {
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #212529;
+}
+
+.event-info p {
+    font-size: 0.95rem;
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+/* --- Hover Effects --- */
+a img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.fab:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s;
+}
+
+/* --- List Group Hover --- */
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.15s ease-in-out;
+}

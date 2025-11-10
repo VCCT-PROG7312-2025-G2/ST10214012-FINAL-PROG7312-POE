@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Submit Service Request";
+}
+
+<div class="container py-5" style="max-width: 600px;">
+
+    <!-- Header -->
+    <div class="mb-5 text-center">
+        <h2 class="fw-bold text-primary"><i class="bi bi-wrench me-2"></i>Submit Service Request</h2>
+        <p class="text-muted small mb-0">Fill out the form below so we can address your request efficiently.</p>
+    </div>
+
+    <!-- Form Section -->
+    <form asp-action="ServiceRequests" method="post" class="request-form p-4 border rounded-3 shadow-sm bg-white">
+
+        <!-- Description -->
+        <div class="mb-4">
+            <label for="description" class="form-label fw-semibold">Description</label>
+            <textarea id="description" name="description" class="form-control form-control-lg" rows="4" required placeholder="Describe the issue..."></textarea>
+        </div>
+
+        <!-- Category -->
+        <div class="mb-4">
+            <label for="category" class="form-label fw-semibold">Category</label>
+            <select id="category" name="category" class="form-select form-select-lg" required>
+                <option value="" selected disabled>-- Select a category --</option>
+                <option value="Water Supply">Water Supply</option>
+                <option value="Electricity">Electricity</option>
+                <option value="Roads & Transport">Roads & Transport</option>
+                <option value="Waste Management">Waste Management</option>
+                <option value="Public Safety">Public Safety</option>
+                <option value="Parks & Recreation">Parks & Recreation</option>
+                <option value="Housing & Infrastructure">Housing & Infrastructure</option>
+                <option value="Environmental">Environmental</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- Priority -->
+        <div class="mb-4">
+            <label for="priority" class="form-label fw-semibold">Priority Level</label>
+            <input type="number" id="priority" name="priority" class="form-control form-control-lg" min="1" max="5" required placeholder="1 = High, 5 = Low" />
+            <div class="form-text small text-muted">Set 1 for urgent issues and 5 for low priority.</div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-outline-primary btn-lg fw-semibold">
+                <i class="bi bi-send me-2"></i>Submit Request
+            </button>
+        </div>
+    </form>
+
+    <!-- Success Message -->
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success text-center mt-4 rounded-3" role="alert">
+            <i class="bi bi-check-circle me-2"></i>@ViewBag.Message
+        </div>
+    }
+</div>
+
+<style>
+    .request-form {
+        background-color: #f7f9ff;
+        border: 1px solid #dce4f5;
+        border-radius: 12px;
+        transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+        .request-form:hover {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+    .form-control-lg, .form-select-lg {
+        font-size: 0.95rem;
+        padding: 0.55rem 0.75rem;
+        border-radius: 0.5rem;
+    }
+
+    .btn-outline-primary {
+        border-width: 2px;
+        transition: all 0.2s;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: #0d6efd;
+            color: #fff;
+            border-color: #0d6efd;
+        }
+</style>

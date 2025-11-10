@@ -1,0 +1,116 @@
+﻿@model List<TESTER.Models.Event>
+
+@{
+    ViewBag.Title = "Events & Announcements";
+    var recommended = ViewBag.Recommended as List<TESTER.Models.Event> ?? new List<TESTER.Models.Event>();
+    var recent = ViewBag.Recent as List<TESTER.Models.Event> ?? new List<TESTER.Models.Event>();
+}
+
+<div class="container py-5" style="max-width: 900px;">
+
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold mb-1"><i class="bi bi-megaphone text-primary me-2"></i>Events & Announcements</h2>
+        <p class="text-muted small mb-0">Stay updated with community events and important news.</p>
+    </div>
+
+    <!-- Filters -->
+    <form method="get" action="@Url.Action("LocalEvents", "Home")" class="row g-2 align-items-end mb-5">
+        <div class="col-md-5">
+            <label class="form-label small text-muted mb-1">Search</label>
+            <input type="text" name="search" value="@ViewBag.CurrentSearch" class="form-control form-control-sm rounded-2" placeholder="Title or category..." />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small text-muted mb-1">From</label>
+            <input type="date" name="startDate" value="@ViewBag.CurrentStartDate" class="form-control form-control-sm rounded-2" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small text-muted mb-1">To</label>
+            <input type="date" name="endDate" value="@ViewBag.CurrentEndDate" class="form-control form-control-sm rounded-2" />
+        </div>
+        <div class="col-md-2 text-end">
+            <button type="submit" class="btn btn-sm btn-primary rounded-2 w-100">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+        </div>
+
+    </form>
+
+    <!-- Recommended -->
+    @if (recommended.Any())
+    {
+        <section class="mb-5">
+            <h6 class="fw-semibold text-success mb-3"><i class="bi bi-lightbulb me-2"></i>Recommended For You</h6>
+            <div class="list-group list-group-flush">
+                @foreach (var e in recommended)
+                {
+                    <a href="@Url.Action("ViewEvent", "Home", new { id = e.Id })" class="list-group-item list-group-item-action py-3 px-2 border-0 border-bottom">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <strong>@e.Title</strong>
+                                <div class="text-muted small"><i class="bi bi-calendar-event me-1"></i>@e.Date.ToString("MMMM dd, yyyy")</div>
+                            </div>
+                            <span class="badge bg-success-subtle text-success">@e.Category</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    }
+
+    <!-- Recently Viewed (Improved) -->
+    @if (recent.Any())
+    {
+        <section class="mb-5">
+            <h6 class="fw-semibold text-secondary mb-3"><i class="bi bi-clock-history me-2"></i>Recently Viewed</h6>
+            <div class="recent-container d-flex flex-wrap gap-3">
+                @foreach (var e in recent)
+                {
+                    <a href="@Url.Action("ViewEvent", "Home", new { id = e.Id })" class="recent-item text-decoration-none">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="recent-icon">
+                                <i class="bi bi-calendar4-week"></i>
+                            </div>
+                            <div>
+                                <div class="fw-semibold small text-dark">@e.Title</div>
+                                <div class="text-muted xsmall">@e.Date.ToString("MMM dd, yyyy")</div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    }
+
+    <!-- All Events -->
+    <section>
+        <h6 class="fw-semibold text-primary mb-3"><i class="bi bi-calendar3 me-2"></i>All Events</h6>
+
+        @if (Model?.Any() == true)
+        {
+            <div class="list-group list-group-flush border-top">
+                @foreach (var e in Model)
+                {
+                    <a href="@Url.Action("ViewEvent", "Home", new { id = e.Id })" class="list-group-item list-group-item-action px-2 py-3 border-0 border-bottom">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fw-semibold">@e.Title</div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-calendar2-week me-1"></i>@e.Date.ToString("MMMM dd, yyyy")
+                                </div>
+                            </div>
+                            <span class="badge bg-primary-subtle text-primary">@e.Category</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center text-muted py-5 border rounded-3">
+                <i class="bi bi-info-circle me-2"></i>No events found.
+            </div>
+        }
+    </section>
+</div>
+

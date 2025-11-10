@@ -21,9 +21,12 @@ ST10214012-PROG7312 FINAL POE
 ## 🧩 Step 3: Open the Project in Visual Studio
 
 1. Double-click the `TESTER.sln` file.
-2. Visual Studio will open the project.
-3. If prompted with a **security warning**, click **“Trust and Continue.”**
-4. Wait for Visual Studio to load and restore all necessary NuGet packages.
+   
+   <img width="641" height="240" alt="TESTER sln" src="https://github.com/user-attachments/assets/e7961ffd-e263-4913-a2e6-fedbe2a391fc" />
+
+3. Visual Studio will open the project.
+4. If prompted with a **security warning**, click **“Trust and Continue.”**
+5. Wait for Visual Studio to load and restore all necessary NuGet packages.
 
 ---
 
@@ -31,17 +34,16 @@ ST10214012-PROG7312 FINAL POE
 
 1. At the top of Visual Studio, make sure the project is set as the **Startup Project**.
 2. Click the **Green Play Button** (or press `Ctrl + F5`) to start the app.
-3. The web application will launch in your browser, usually at a link like:
 
-   ```
-   https://localhost:xxxx
-   ```
+   <img width="989" height="70" alt="GREEN PLAY BUTTON" src="https://github.com/user-attachments/assets/15014754-cfbb-4323-9925-a1b312fb7cd9" />
 
----
+  
 
 ## 💻 Step 5: Using the Application
 
 Once the application is running, you’ll be taken to the **home page**.
+
+<img width="2557" height="736" alt="Homepage" src="https://github.com/user-attachments/assets/98a12517-a0ee-412e-a331-989eef50a8e7" />
 
 ### 🗂️ Main Features
 
@@ -51,11 +53,17 @@ The user can perform the following actions:
 
 * Navigate to the **“Add Reports”** section.
 * Fill in the form and submit your report.
+
+ <img width="2556" height="718" alt="Add Report Form" src="https://github.com/user-attachments/assets/8822b7c9-5e0c-40d8-bea8-35818dd6a28d" />
+
 * Submitted reports can be viewed later under **“View Reports.”**
 
 #### 2. View Reports
 
 * Allows users to see all reports they have submitted.
+
+  <img width="2555" height="1305" alt="ViewReports" src="https://github.com/user-attachments/assets/da46a291-744b-464d-bfe0-57429167125c" />
+
 
 #### 3. View Local Events & Announcements
 

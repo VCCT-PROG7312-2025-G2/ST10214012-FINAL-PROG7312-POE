@@ -1,163 +1,248 @@
 ﻿@{
     ViewBag.Title = "View Service Requests";
-    var allRequests = ViewBag.AllRequests as List<TESTER.Models.ServiceRequest> ?? new List<TESTER.Models.ServiceRequest>();
-}
 
+    var requests = ViewBag.AllRequests
+        as List<TESTER.Models.ServiceRequest> ?? new List<TESTER.Models.ServiceRequest>();
+
+    var dependencies = ViewBag.Dependencies
+        as List<TESTER.Models.ServiceRequest> ?? new List<TESTER.Models.ServiceRequest>();
+
+    var currentSort = ViewBag.CurrentSort as string ?? "priority";
+}
 <div class="container py-5">
 
-    <!-- Header -->
+    <!-- ==================== PAGE HEADER ==================== -->
     <div class="text-center mb-5">
-        <h2 class="fw-bold text-primary">Service Requests</h2>
-        <p class="text-muted fs-6">View submitted requests and track a specific request by its ID.</p>
+        <h2 class="fw-bold text-primary">Service Requests Dashboard</h2>
+        <p class="text-muted fs-6">
+            Toggle the view to see requests ordered by **priority** or by **ID**.
+        </p>
     </div>
 
-    <!-- All Requests Table -->
-    <div class="mb-5">
-        <h5 class="text-secondary mb-3">All Submitted Requests</h5>
+    <!-- ==================== SORT SWITCHER ==================== -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body d-flex flex-wrap align-items-center gap-3">
+            <span class="fw-semibold">View by:</span>
 
-        @if (allRequests.Count > 0)
-        {
-            <div class="table-responsive shadow-sm rounded">
-                <table class="table table-striped align-middle mb-0">
-                    <thead class="table-light text-uppercase small">
-                        <tr>
-                            <th>ID</th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>Submitted At</th>
-                            <th>Status</th>
-                            <th>Priority</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var req in allRequests)
-                        {
-                            var statusClass = req.Status switch
-                            {
-                                "Completed" => "badge bg-success text-white",
-                                "In Progress" => "badge bg-warning text-dark",
-                                _ => "badge bg-secondary text-white"
-                            };
-
-                            var priorityClass = req.Priority switch
-                            {
-                                1 => "badge bg-danger text-white fw-semibold",
-                                2 => "badge bg-danger text-white fw-semibold",
-                                3 => "badge bg-warning text-dark fw-semibold",
-                                _ => "badge bg-success text-white fw-semibold"
-                            };
-
-                            <tr>
-                                <td>@req.Id</td>
-                                <td class="text-truncate" style="max-width:300px;">@req.Description</td>
-                                <td>@req.Category</td>
-                                <td>@req.RequestDate.ToString("yyyy-MM-dd HH:mm")</td>
-                                <td><span class="@statusClass">@req.Status</span></td>
-                                <td><span class="@priorityClass">@req.Priority</span></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-        else
-        {
-            <div class="alert alert-info text-center shadow-sm py-3 rounded">
-                No service requests have been submitted yet.
-            </div>
-        }
-    </div>
-
-    <hr class="my-5" />
-
-    <!-- Track Request Section -->
-    <div class="mb-4 text-center">
-        <h5 class="fw-bold text-primary"><i class="bi bi-search me-2"></i>Track Request by ID</h5>
-        <p class="text-muted small mb-0">Enter your request ID below to see its details.</p>
-    </div>
-
-    <div class="card-section mx-auto p-4 shadow-sm" style="max-width: 800px;">
-
-        <!-- Track Form -->
-        <form asp-action="TrackServiceRequest" method="post" class="mb-4">
-            <div class="mb-3">
-                <label for="id" class="form-label fw-semibold">Request ID</label>
-                <input type="number" id="id" name="id" class="form-control form-control-lg" required placeholder="Enter request ID" />
-            </div>
-            <div class="d-grid">
-                <button type="submit" class="btn btn-outline-primary btn-lg fw-semibold">
-                    <i class="bi bi-search me-2"></i>Track Request
+            <form asp-action="ViewServiceRequests" method="get" class="d-inline">
+                <input type="hidden" name="sort" value="priority" />
+                <button type="submit"
+                        class="btn @(currentSort == "priority" ? "btn-primary" : "btn-outline-primary")">
+                    Priority (Urgent first)
                 </button>
-            </div>
-        </form>
+            </form>
 
-        <!-- Display Tracked Request -->
-        @if (ViewBag.TrackedRequest != null)
-        {
-            var trackedRequest = ViewBag.TrackedRequest as TESTER.Models.ServiceRequest;
+            <form asp-action="ViewServiceRequests" method="get" class="d-inline">
+                <input type="hidden" name="sort" value="id" />
+                <button type="submit"
+                        class="btn @(currentSort == "id" ? "btn-success" : "btn-outline-success")">
+                    ID (Red‑Black Tree)
+                </button>
+            </form>
+        </div>
+    </div>
 
-            <div class="shadow-sm rounded">
-                <table class="table table-borderless mb-0">
-                    <thead class="table-light small text-uppercase">
-                        <tr>
-                            <th>ID</th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>Submitted At</th>
-                            <th>Status</th>
-                            <th>Priority</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>@trackedRequest.Id</td>
-                            <td style="max-width:500px;">@trackedRequest.Description</td>
-                            <td>@trackedRequest.Category</td>
-                            <td>@trackedRequest.RequestDate.ToString("yyyy-MM-dd HH:mm")</td>
-                            <td>
-                                <span class="badge @(trackedRequest.Status == "Completed" ? "bg-success" : trackedRequest.Status == "In Progress" ? "bg-warning text-dark" : "bg-secondary text-white")">
-                                    @trackedRequest.Status
+    <!-- ==================== REQUESTS TABLE ==================== -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-header @(currentSort == "priority" ? "bg-primary" : "bg-success") text-white">
+            <h5 class="mb-0">
+                @(currentSort == "priority"
+                                ? "Urgent Requests First (Min‑Heap)"
+                                : "All Requests by ID (Red‑Black Tree In‑Order)")
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            @if (requests.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle mb-0">
+                        <thead class="table-light text-uppercase small">
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Submitted</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var r in requests)
+                            {
+                                var statusCls = r.Status switch
+                                {
+                                    "Completed" => "badge bg-success text-white",
+                                    "In Progress" => "badge bg-warning text-dark",
+                                    _ => "badge bg-secondary text-white"
+                                };
+                                var prioCls = r.Priority switch
+                                {
+                                    1 => "badge bg-danger text-white fw-semibold",
+                                    2 => "badge bg-danger text-white fw-semibold",
+                                    3 => "badge bg-warning text-dark fw-semibold",
+                                    _ => "badge bg-success text-white fw-semibold"
+                                };
+                                <tr>
+                                    <td>@r.Id</td>
+                                    <td class="text-truncate" style="max-width:280px;">@r.Description</td>
+                                    <td>@r.Category</td>
+                                    <td>@r.RequestDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td><span class="@statusCls">@r.Status</span></td>
+                                    <td><span class="@prioCls">@r.Priority</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info m-3">
+                    No service requests have been submitted yet.
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- ==================== TRACK REQUEST ==================== -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Track a Request by ID</h5>
+        </div>
+        <div class="card-body">
+
+            <form asp-action="TrackServiceRequest" method="post" class="mb-4">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="id" class="col-form-label fw-semibold">Request ID</label>
+                    </div>
+                    <div class="col-auto flex-grow-1">
+                        <input type="number" id="id" name="id"
+                               class="form-control form-control-lg" required
+                               placeholder="e.g. 12345" />
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-primary btn-lg">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            @* ---------- TRACKED REQUEST ---------- *@
+            @if (ViewBag.TrackedRequest != null)
+            {
+                var tr = ViewBag.TrackedRequest as TESTER.Models.ServiceRequest;
+                <div class="mb-4">
+                    <h6 class="fw-semibold text-primary mb-2">Tracked Request</h6>
+                    <table class="table table-borderless mb-0">
+                        <thead class="table-light small text-uppercase">
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Submitted</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@tr.Id</td>
+                                <td style="max-width:500px;">@tr.Description</td>
+                                <td>@tr.Category</td>
+                                <td>@tr.RequestDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>
+                                    <span class="badge @(tr.Status == "Completed" ? "bg-success" :
+                                                                                                   tr.Status == "In Progress" ? "bg-warning text-dark" :
+                                                                                                   "bg-secondary text-white")">
+                                    @tr.Status
                                 </span>
                             </td>
                             <td>
-                                <span class="badge @(trackedRequest.Priority <= 2 ? "bg-danger" : trackedRequest.Priority == 3 ? "bg-warning text-dark" : "bg-success") fw-semibold">
-                                    @trackedRequest.Priority
+                                <span class="badge @(tr.Priority <= 2 ? "bg-danger" :
+                                                                                               tr.Priority == 3 ? "bg-warning text-dark" :
+                                                                                               "bg-success") fw-semibold">
+                                    @tr.Priority
                                 </span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        }
-        else if (ViewBag.Message != null)
-        {
-            <div class="alert alert-danger shadow-sm rounded p-3 text-center mt-3">
-                @ViewBag.Message
-            </div>
-        }
+
+                @* ---------- DEPENDENCIES ---------- *@
+            @if (dependencies.Any())
+                {
+                    <h6 class="fw-semibold text-primary mb-2">Dependent Requests</h6>
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle mb-0">
+                            <thead class="table-light small text-uppercase">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Submitted</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var d in dependencies)
+                                {
+                                    var dsCls = d.Status switch
+                                    {
+                                        "Completed" => "badge bg-success text-white",
+                                        "In Progress" => "badge bg-warning text-dark",
+                                        _ => "badge bg-secondary text-white"
+                                    };
+                                    var dpCls = d.Priority switch
+                                    {
+                                        1 => "badge bg-danger text-white fw-semibold",
+                                        2 => "badge bg-danger text-white fw-semibold",
+                                        3 => "badge bg-warning text-dark fw-semibold",
+                                        _ => "badge bg-success text-white fw-semibold"
+                                    };
+                                    <tr>
+                                        <td>@d.Id</td>
+                                        <td style="max-width:500px;">@d.Description</td>
+                                        <td>@d.Category</td>
+                                        <td>@d.RequestDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                        <td><span class="@dsCls">@d.Status</span></td>
+                                        <td><span class="@dpCls">@d.Priority</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+            else if (ViewBag.Message != null)
+            {
+                <div class="alert alert-danger text-center mt-3">
+                    @ViewBag.Message
+                </div>
+            }
+        </div>
     </div>
 </div>
 
 <style>
-    .card-section {
-        background-color: #f7f9ff;
-        border: 1px solid #dce4f5;
-        border-radius: 12px;
-        transition: transform 0.2s, box-shadow 0.2s;
+    .card-header {
+        font-weight: 600;
     }
 
-        .card-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-        }
-
     .badge {
-        font-size: 0.85rem;
-        padding: 0.4em 0.6em;
-        border-radius: 0.5rem;
+        font-size: .85rem;
+        padding: .35em .65em;
+        border-radius: .5rem;
     }
 
     .table th, .table td {
         vertical-align: middle !important;
+    }
+
+    .table-responsive {
+        border-radius: .375rem;
     }
 </style>

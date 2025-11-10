@@ -134,7 +134,6 @@ namespace TESTER.Controllers
                 Description = "Hosted at the Cape Town Civic Centre, this public meeting invites residents to discuss upcoming infrastructure, housing, and urban development plans."
             }
         };
-
         private static Stack<Event> recentEvents = new Stack<Event>();
         private static Dictionary<string, List<Event>> eventsByCategory = allEvents.GroupBy(e => e.Category).ToDictionary(g => g.Key, g => g.ToList());
         private static HashSet<string> categories = new HashSet<string>(allEvents.Select(e => e.Category));
@@ -150,24 +149,23 @@ namespace TESTER.Controllers
         private static ServiceRequestGraph requestGraph = new ServiceRequestGraph();
         private static LinkedList<ServiceRequest> linkedRequests = new LinkedList<ServiceRequest>();
 
+        // RED-BLACK TREE
+        private static ServiceRequestRBTree rbTree = new ServiceRequestRBTree();
+
         // ----------------- HOME -----------------
         public IActionResult Index() => View();
 
         // ----------------- LOCAL EVENTS -----------------
         public IActionResult LocalEvents(string search, string startDate, string endDate)
         {
-            // Parse date filters
             DateTime? start = null;
             DateTime? end = null;
-
             if (!string.IsNullOrEmpty(startDate) && DateTime.TryParse(startDate, out var s))
                 start = s.Date;
             if (!string.IsNullOrEmpty(endDate) && DateTime.TryParse(endDate, out var e))
                 end = e.Date;
 
-            // Filter events based on search and dates
             List<Event> filteredEvents = allEvents;
-
             if (!string.IsNullOrWhiteSpace(search) || start.HasValue || end.HasValue)
             {
                 filteredEvents = allEvents
@@ -178,22 +176,17 @@ namespace TESTER.Controllers
                     .ToList();
             }
 
-            // --- Recommended events only based on what user clicked ---
             List<Event> recommended = new List<Event>();
             if (recentEvents.Any())
             {
-                // Get the most recent clicked event's category
                 string lastCategory = recentEvents.Peek().Category;
                 recommended = eventsByCategory[lastCategory]
-                                .Where(ev => !recentEvents.Contains(ev)) // avoid duplicates
+                                .Where(ev => !recentEvents.Contains(ev))
                                 .Take(5)
                                 .ToList();
             }
 
-            // --- Recently viewed events ---
             var recent = recentEvents.ToList();
-
-            // --- Pass data to ViewBag ---
             ViewBag.Recommended = recommended;
             ViewBag.Recent = recent;
             ViewBag.Categories = categories;
@@ -208,8 +201,7 @@ namespace TESTER.Controllers
         {
             var ev = allEvents.FirstOrDefault(e => e.Id == id);
             if (ev != null)
-                recentEvents.Push(ev); // track clicks for recommendations
-
+                recentEvents.Push(ev);
             return View(ev);
         }
 
@@ -220,21 +212,17 @@ namespace TESTER.Controllers
         public IActionResult AddReports(string location, string category, string description, IFormFile media)
         {
             string mediaPath = null;
-
             if (media != null && media.Length > 0)
             {
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
                 if (!Directory.Exists(uploadsFolder))
                     Directory.CreateDirectory(uploadsFolder);
-
                 var fileName = $"{DateTime.Now.Ticks}_{Path.GetFileName(media.FileName)}";
                 var filePath = Path.Combine(uploadsFolder, fileName);
-
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     media.CopyTo(stream);
                 }
-
                 mediaPath = "/uploads/" + fileName;
             }
 
@@ -265,14 +253,14 @@ namespace TESTER.Controllers
         {
             ViewBag.AllRequests = requestBST.InOrder();
             ViewBag.PriorityRequests = requestHeap.GetAll().OrderBy(r => r.Priority).ToList();
+            ViewBag.RBRequests = rbTree.InOrder();
             return View();
         }
 
         [HttpPost]
-        public IActionResult ServiceRequests(string description, string category, int priority)
+        public IActionResult ServiceRequests(string description, string category, int priority, int? dependsOnId)
         {
             int newId = (int)(DateTime.Now.Ticks % int.MaxValue);
-
             var newRequest = new ServiceRequest
             {
                 Id = newId,
@@ -288,9 +276,15 @@ namespace TESTER.Controllers
 
             AddServiceRequest(newRequest);
 
+            if (dependsOnId.HasValue)
+            {
+                requestGraph.AddDependency(newRequest.Id, dependsOnId.Value);
+            }
+
             ViewBag.Message = "Service request submitted successfully!";
             ViewBag.AllRequests = requestBST.InOrder();
             ViewBag.PriorityRequests = requestHeap.GetAll().OrderBy(r => r.Priority).ToList();
+            ViewBag.RBRequests = rbTree.InOrder();
 
             return View();
         }
@@ -300,28 +294,45 @@ namespace TESTER.Controllers
         {
             var request = requestBST.Search(id);
 
-            ViewBag.AllRequests = requestBST.InOrder();
-            ViewBag.PriorityRequests = requestHeap.GetAll().OrderBy(r => r.Priority).ToList();
+            // Always show current view with sort
+            ViewBag.AllRequests = GetSortedRequests("priority"); // default
             ViewBag.RequestGraph = requestGraph;
+            ViewBag.CurrentSort = "priority";
 
             if (request == null)
             {
                 ViewBag.Message = $"No request found with ID {id}";
                 ViewBag.TrackedRequest = null;
+                ViewBag.Dependencies = null;
             }
             else
             {
                 ViewBag.TrackedRequest = request;
                 ViewBag.Message = null;
+                var dependencyIds = requestGraph.DFS(id);
+                dependencyIds.Remove(id);
+                var dependencies = requestBST.InOrder().Where(r => dependencyIds.Contains(r.Id)).ToList();
+                ViewBag.Dependencies = dependencies;
             }
 
             return View("ViewServiceRequests");
         }
 
-        public IActionResult ViewServiceRequests()
+        // ----------------- VIEW SERVICE REQUESTS WITH SORT -----------------
+        public IActionResult ViewServiceRequests(string sort = "priority")
         {
-            ViewBag.AllRequests = requestHeap.GetAll().OrderBy(r => r.Priority).ToList();
+            ViewBag.AllRequests = GetSortedRequests(sort);
+            ViewBag.RequestGraph = requestGraph;
+            ViewBag.CurrentSort = sort;
             return View();
+        }
+
+        // Helper to get sorted list based on sort parameter
+        private List<ServiceRequest> GetSortedRequests(string sort)
+        {
+            return sort == "id"
+                ? rbTree.InOrder()
+                : requestHeap.GetAll().OrderBy(r => r.Priority).ToList();
         }
 
         // ----------------- HELPER -----------------
@@ -330,6 +341,7 @@ namespace TESTER.Controllers
             linkedRequests.AddLast(req);
             requestBST.Insert(req);
             requestHeap.Add(req);
+            rbTree.Insert(req);
         }
     }
 }

@@ -2,11 +2,8 @@ ST10214012-PROG7312 FINAL POE
 
 ## 📥 Step 1: Download the Project or Run it via github with Visual Studio
 
-1. In your submission folder, open the `.txt` file that contains your **GitHub repository link**.
-2. Copy the link and paste it into your web browser’s address bar.
-3. You will be directed to the GitHub repository page.
-4. Click the **green “Code” button** at the top right of the page.
-5. Choose **“Download ZIP”** to download the project to your computer.
+1. Click the **green “Code” button** at the top right of the page.
+2. Choose **“Download ZIP”** to download the project to your computer or open with Visual Studio.
  <img width="461" height="383" alt="image" src="https://github.com/user-attachments/assets/9924fcbc-1324-48d1-8765-e27a6f613151" />
 
 

@@ -1,46 +1,82 @@
-# ST10214012 PROG7312 POE PART 1
+ST10214012-PROG7312 FINAL POE
 
-Download the ZIP file for this application
+## 📥 Step 1: Download the Project or Run it via github with Visual Studio
 
-<img width="400" height="186" alt="Download ZiP" src="https://github.com/user-attachments/assets/4e35ebec-3ea4-478b-8712-90d9b151fd03" />
+1. In your submission folder, open the `.txt` file that contains your **GitHub repository link**.
+2. Copy the link and paste it into your web browser’s address bar.
+3. You will be directed to the GitHub repository page.
+4. Click the **green “Code” button** at the top right of the page.
+5. Choose **“Download ZIP”** to download the project to your computer.
+
+---
+
+## 📂 Step 2: Extract the Project
+
+1. Locate the downloaded ZIP file (usually in your **Downloads** folder).
+2. Right-click the ZIP file and choose **Extract All**.
+3. Once extracted, you will find a folder containing the Visual Studio solution file (`TESTER.sln`).
+4. Drag this extracted folder to your **Desktop** for easier access.
+
+---
+
+## 🧩 Step 3: Open the Project in Visual Studio
+
+1. Double-click the `TESTER.sln` file.
+2. Visual Studio will open the project.
+3. If prompted with a **security warning**, click **“Trust and Continue.”**
+4. Wait for Visual Studio to load and restore all necessary NuGet packages.
+
+---
+
+## ▶️ Step 4: Run the Application
+
+1. At the top of Visual Studio, make sure the project is set as the **Startup Project**.
+2. Click the **Green Play Button** (or press `Ctrl + F5`) to start the app.
+3. The web application will launch in your browser, usually at a link like:
+
+   ```
+   https://localhost:xxxx
+   ```
+
+---
+
+## 💻 Step 5: Using the Application
+
+Once the application is running, you’ll be taken to the **home page**.
+
+### 🗂️ Main Features
+
+The user can perform the following actions:
+
+#### 1. Add Reports
+
+* Navigate to the **“Add Reports”** section.
+* Fill in the form and submit your report.
+* Submitted reports can be viewed later under **“View Reports.”**
+
+#### 2. View Reports
+
+* Allows users to see all reports they have submitted.
+
+#### 3. View Local Events & Announcements
+
+* Displays **municipality events and announcements**.
+* Clicking on an event shows **recommended events** based on the user’s viewing history.
+* Users can **filter** events by **date** and **category**.
+
+#### 4. Submit Service Requests
+
+* Navigate to the **“Submit Request”** section.
+* Fill out the **Service Request Form** and click **Submit**.
+* To view your requests, go to **“View Submitted Requests”** in the navbar.
+
+#### 5. Track Service Requests
+
+* Copy the **Request ID** and paste it into the **“Track by ID”** field.
+* The system will display the request’s current status.
+* Requests are automatically **sorted by priority** — 1 being highest, 5 being lowest.
 
 
-Once the folder is downloaded click into it.
 
-<img width="84" height="125" alt="Folder" src="https://github.com/user-attachments/assets/753f3982-312e-427b-9e96-9a606e740ea8" />
-
-Once in the folder open the TESTER.solution:
-
-<img width="614" height="30" alt="Solution File" src="https://github.com/user-attachments/assets/45551d14-ebf0-493e-8f6b-b8bbd351aade" />
-
-
-You will then be presented with the application as it will open, 
-
-
-<img width="2552" height="1312" alt="Opened App" src="https://github.com/user-attachments/assets/79b1e150-abbe-4605-aa09-cb950d26b11e" />
-
-
-Once open press on the green play button, it is circled on the screenshot
-
-
-<img width="988" height="260" alt="Press Run button" src="https://github.com/user-attachments/assets/726e9d6a-365f-44e0-bf4f-538a73a40077" />
-
-
-When the application is loaded fully you will be presented with the hompage:
-
-
-<img width="2555" height="1305" alt="Website Homepage" src="https://github.com/user-attachments/assets/d2863e5f-97ac-42dc-88d0-53b458516e89" />
-
-In this section add reports and Events is enabled, this section focuses on Events, click on events:
-
-<img width="2558" height="1305" alt="Local Events" src="https://github.com/user-attachments/assets/d5110f96-3751-4be4-bac3-23b0a873c155" />
-
-The Events will display on this page:
-
-<img width="2558" height="1305" alt="Local Events" src="https://github.com/user-attachments/assets/d5110f96-3751-4be4-bac3-23b0a873c155" />
-
-Here the user will be presented with all events and will be able to filter through them by either category or by date:
-
-<img width="2553" height="1296" alt="Search" src="https://github.com/user-attachments/assets/0942ea74-2584-4ce6-a1d7-cd939047f37c" />
 
 

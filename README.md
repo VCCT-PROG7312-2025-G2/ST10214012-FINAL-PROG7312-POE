@@ -7,6 +7,8 @@ ST10214012-PROG7312 FINAL POE
 3. You will be directed to the GitHub repository page.
 4. Click the **green “Code” button** at the top right of the page.
 5. Choose **“Download ZIP”** to download the project to your computer.
+ <img width="461" height="383" alt="image" src="https://github.com/user-attachments/assets/9924fcbc-1324-48d1-8765-e27a6f613151" />
+
 
 ---
 

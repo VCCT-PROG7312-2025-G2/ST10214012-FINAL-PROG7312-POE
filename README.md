@@ -92,13 +92,12 @@ The user can perform the following actions:
 #### 5. Track Service Requests
 
 * Copy the **Request ID** and paste it into the **“Track by ID”** field.
+  
+<img width="892" height="439" alt="ViewServiceRequest TRACKER" src="https://github.com/user-attachments/assets/37a19120-d468-49af-8f7b-facf73df65f9" />
+
 * The system will display the request’s current status.
-
-  <img width="892" height="439" alt="image" src="https://github.com/user-attachments/assets/dc067f80-d655-4570-9e12-355f1f10ae01" />
-
 * Requests are automatically **sorted by priority** — 1 being highest, 5 being lowest.
+<img width="2556" height="570" alt="ViewServiceRequest" src="https://github.com/user-attachments/assets/9e3adf8a-8fac-4012-9fc0-3fd3f04a36ba" />
 
-
-<img width="892" height="439" alt="ViewServiceRequest TRACKER" src="https://github.com/user-attachments/assets/a7483e47-2998-495b-b65b-9f6046c6e0c1" />
 
 

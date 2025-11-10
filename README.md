@@ -70,20 +70,35 @@ The user can perform the following actions:
 * Displays **municipality events and announcements**.
 * Clicking on an event shows **recommended events** based on the user’s viewing history.
 * Users can **filter** events by **date** and **category**.
+  
+<img width="2539" height="1217" alt="Events and announcements" src="https://github.com/user-attachments/assets/6e01b341-60b4-4944-b78c-30f146932e78" />
+
+  
 
 #### 4. Submit Service Requests
 
 * Navigate to the **“Submit Request”** section.
 * Fill out the **Service Request Form** and click **Submit**.
+  
+<img width="2559" height="798" alt="Service requests" src="https://github.com/user-attachments/assets/64904737-5d89-4bdc-a5b2-28299066e11f" />
+
+  
 * To view your requests, go to **“View Submitted Requests”** in the navbar.
+* 
+<img width="534" height="64" alt="ViewServiceRequestTab" src="https://github.com/user-attachments/assets/b81eeb26-f582-4c76-8b09-7f17c0029a6f" />
+
+  
 
 #### 5. Track Service Requests
 
 * Copy the **Request ID** and paste it into the **“Track by ID”** field.
 * The system will display the request’s current status.
+
+  <img width="892" height="439" alt="image" src="https://github.com/user-attachments/assets/dc067f80-d655-4570-9e12-355f1f10ae01" />
+
 * Requests are automatically **sorted by priority** — 1 being highest, 5 being lowest.
 
 
-
+<img width="892" height="439" alt="ViewServiceRequest TRACKER" src="https://github.com/user-attachments/assets/a7483e47-2998-495b-b65b-9f6046c6e0c1" />
 
 

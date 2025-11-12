@@ -13,7 +13,7 @@ namespace TESTER.Models
             while (i > 0)
             {
                 int parent = (i - 1) / 2;
-                // MIN-HEAP: smallest priority rises
+                
                 if (heap[i].Priority >= heap[parent].Priority) break;
                 var temp = heap[i];
                 heap[i] = heap[parent];
@@ -38,7 +38,6 @@ namespace TESTER.Models
             int right = 2 * i + 2;
             int smallest = i;
 
-            // MIN-HEAP comparisons
             if (left < heap.Count && heap[left].Priority < heap[smallest].Priority) smallest = left;
             if (right < heap.Count && heap[right].Priority < heap[smallest].Priority) smallest = right;
 

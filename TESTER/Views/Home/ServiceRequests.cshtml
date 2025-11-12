@@ -5,7 +5,7 @@
     <!-- Header -->
     <div class="mb-5 text-center">
         <h2 class="fw-bold text-primary">Submit Service Request</h2>
-        <p class="text-muted small mb-0">Fill out the form below so we can address your request efficiently.</p>
+        <p class="text-muted small mb-0">Fill Out Service Request Form</p>
     </div>
 
     <!-- Form Section -->
@@ -40,7 +40,7 @@
             <div class="form-text small text-muted">Set 1 for urgent issues and 5 for low priority.</div>
         </div>
 
-        <!-- LOCATION FIELD (NEW) -->
+        <!-- Location -->
         <div class="mb-4">
             <label for="location" class="form-label fw-semibold">Location (Suburb)</label>
             <input type="text" id="location" name="location" class="form-control form-control-lg" required
@@ -55,7 +55,7 @@
         </div>
     </form>
 
-    <!-- Success Message -->
+
     @if (ViewBag.Message != null)
     {
         <div class="alert alert-success text-center mt-4 rounded-3 shadow-sm" role="alert">
@@ -68,8 +68,8 @@
         <a asp-action="ViewServiceRequests" class="btn btn-outline-success btn-sm me-2">
             View All Requests
         </a>
-        <a asp-action="BatchRequests" class="btn btn-outline-warning btn-sm">
-            View Field Batches (MST)
+        <a asp-action="BatchRequests" class="btn btn-outline-primary btn-sm">
+            View Field Batches
         </a>
     </div>
 </div>

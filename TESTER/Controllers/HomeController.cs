@@ -10,7 +10,7 @@ namespace TESTER.Controllers
 {
     public class HomeController : Controller
     {
-        // ----------------- EVENTS -----------------
+        //Events
         private static List<Event> allEvents = new List<Event>
         {
             new Event
@@ -138,25 +138,23 @@ namespace TESTER.Controllers
         private static Dictionary<string, List<Event>> eventsByCategory = allEvents.GroupBy(e => e.Category).ToDictionary(g => g.Key, g => g.ToList());
         private static HashSet<string> categories = new HashSet<string>(allEvents.Select(e => e.Category));
 
-        // ----------------- REPORTS -----------------
+        //Reports
         private static Stack<ReportModel> recentReports = new Stack<ReportModel>();
         private static Queue<ReportModel> reportQueue = new Queue<ReportModel>();
         private static LinkedList<ReportModel> linkedReports = new LinkedList<ReportModel>();
 
-        // ----------------- SERVICE REQUESTS DATA STRUCTURES -----------------
+        //ServiceRequest Data Structures
         private static ServiceRequestBST requestBST = new ServiceRequestBST();
         private static ServiceRequestHeap requestHeap = new ServiceRequestHeap();
         private static ServiceRequestGraph requestGraph = new ServiceRequestGraph();
         private static LinkedList<ServiceRequest> linkedRequests = new LinkedList<ServiceRequest>();
         private static ServiceRequestRBTree rbTree = new ServiceRequestRBTree();
-
-        // ----------------- MST FOR BATCHING -----------------
         private static ServiceRequestMST mst = new ServiceRequestMST();
 
-        // ----------------- HOME -----------------
+        //Home
         public IActionResult Index() => View();
 
-        // ----------------- LOCAL EVENTS -----------------
+        //Local Events
         public IActionResult LocalEvents(string search, string startDate, string endDate)
         {
             DateTime? start = null;
@@ -197,7 +195,7 @@ namespace TESTER.Controllers
 
             return View(filteredEvents);
         }
-
+        //View Event
         public IActionResult ViewEvent(int id)
         {
             var ev = allEvents.FirstOrDefault(e => e.Id == id);
@@ -206,7 +204,7 @@ namespace TESTER.Controllers
             return View(ev);
         }
 
-        // ----------------- ADD REPORT -----------------
+        //Add Report
         public IActionResult AddReports() => View();
 
         [HttpPost]
@@ -249,7 +247,7 @@ namespace TESTER.Controllers
             return View();
         }
 
-        // ----------------- SERVICE REQUESTS -----------------
+        //Service Request
         public IActionResult ServiceRequests()
         {
             ViewBag.AllRequests = requestBST.InOrder();
@@ -318,7 +316,7 @@ namespace TESTER.Controllers
             return View("ViewServiceRequests");
         }
 
-        // ----------------- VIEW SERVICE REQUESTS WITH SORT -----------------
+        //View service requests priority sort
         public IActionResult ViewServiceRequests(string sort = "priority")
         {
             ViewBag.AllRequests = GetSortedRequests(sort);
@@ -327,7 +325,7 @@ namespace TESTER.Controllers
             return View();
         }
 
-        // ----------------- BATCH REQUESTS (MST) -----------------
+        //Batch requests by location
         public IActionResult BatchRequests()
         {
             var allRequests = requestHeap.GetAll().ToList();
@@ -344,7 +342,7 @@ namespace TESTER.Controllers
             {
                 var requests = group.ToList();
 
-                // Split into batches of max 3
+                //max 3 batches
                 for (int i = 0; i < requests.Count; i += 3)
                 {
                     var batch = requests.Skip(i).Take(3).ToList();
@@ -356,7 +354,7 @@ namespace TESTER.Controllers
             return View();
         }
 
-        // ----------------- HELPERS -----------------
+     
         private List<ServiceRequest> GetSortedRequests(string sort)
         {
             return sort == "id"

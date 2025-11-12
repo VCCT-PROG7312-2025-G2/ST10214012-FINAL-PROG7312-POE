@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace TESTER.Models
 {
+    //MST
     public class Edge
     {
         public ServiceRequest A { get; set; }

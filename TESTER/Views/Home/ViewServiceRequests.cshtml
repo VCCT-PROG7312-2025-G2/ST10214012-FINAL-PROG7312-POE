@@ -11,15 +11,14 @@
 }
 <div class="container py-5">
 
-    <!-- ==================== PAGE HEADER ==================== -->
     <div class="text-center mb-5">
         <h2 class="fw-bold text-primary">Service Requests Dashboard</h2>
         <p class="text-muted fs-6">
-            Toggle the view to see requests ordered by **priority** or by **ID**.
+            View requests by Priority or by ID
         </p>
     </div>
 
-    <!-- ==================== SORT SWITCHER ==================== -->
+    <!-- Switch between ID or Priority -->
     <div class="card shadow-sm mb-4">
         <div class="card-body d-flex flex-wrap align-items-center gap-3">
             <span class="fw-semibold">View by:</span>
@@ -36,19 +35,19 @@
                 <input type="hidden" name="sort" value="id" />
                 <button type="submit"
                         class="btn @(currentSort == "id" ? "btn-success" : "btn-outline-success")">
-                    ID (Red‑Black Tree)
+                    ID 
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- ==================== REQUESTS TABLE ==================== -->
+    <!--Request Table-->
     <div class="card shadow-sm mb-5">
         <div class="card-header @(currentSort == "priority" ? "bg-primary" : "bg-success") text-white">
             <h5 class="mb-0">
                 @(currentSort == "priority"
-                                ? "Urgent Requests First (Min‑Heap)"
-                                : "All Requests by ID (Red‑Black Tree In‑Order)")
+                                ? "Urgent Requests First (Priority)"
+                                : "All Requests by ID (Order of ID)")
             </h5>
         </div>
         <div class="card-body p-0">

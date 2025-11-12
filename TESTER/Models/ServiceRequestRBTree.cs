@@ -3,34 +3,24 @@ using System.Collections.Generic;
 
 namespace TESTER.Models
 {
-    // --------------------------------------------------------------
-    // Red-Black Tree Node
-    // --------------------------------------------------------------
+  //RBTRee
     internal class RBNode
     {
         public ServiceRequest Data;
         public RBNode Left;
         public RBNode Right;
         public RBNode Parent;
-        public bool IsRed;               // true = RED, false = BLACK
+        public bool IsRed;              
 
         public RBNode(ServiceRequest data)
         {
             Data = data;
-            IsRed = true;                // new nodes are red
+            IsRed = true;                
         }
     }
-
-    // --------------------------------------------------------------
-    // Red-Black Tree (public API)
-    // --------------------------------------------------------------
     public class ServiceRequestRBTree
     {
         private RBNode _root;
-
-        // ----------------------------------------------------------
-        // PUBLIC METHODS
-        // ----------------------------------------------------------
         public void Insert(ServiceRequest request)
         {
             RBNode newNode = new RBNode(request);
@@ -50,10 +40,6 @@ namespace TESTER.Models
             InOrder(_root, result);
             return result;
         }
-
-        // ----------------------------------------------------------
-        // PRIVATE HELPERS
-        // ----------------------------------------------------------
         private RBNode Insert(RBNode root, RBNode newNode, RBNode parent)
         {
             if (root == null)
@@ -87,10 +73,6 @@ namespace TESTER.Models
             list.Add(node.Data);
             InOrder(node.Right, list);
         }
-
-        // ----------------------------------------------------------
-        // RED-BLACK FIX-UP AFTER INSERT
-        // ----------------------------------------------------------
         private void FixInsert(RBNode node)
         {
             while (node != _root && node.Parent.IsRed)
@@ -98,12 +80,12 @@ namespace TESTER.Models
                 RBNode parent = node.Parent;
                 RBNode grandParent = parent.Parent;
 
-                // Parent is LEFT child of grandparent
+               
                 if (parent == grandParent.Left)
                 {
                     RBNode uncle = grandParent.Right;
 
-                    if (uncle?.IsRed == true)                     // Case 1
+                    if (uncle?.IsRed == true)                   
                     {
                         parent.IsRed = false;
                         uncle.IsRed = false;
@@ -112,25 +94,25 @@ namespace TESTER.Models
                     }
                     else
                     {
-                        if (node == parent.Right)                 // Case 2 (triangle)
+                        if (node == parent.Right)                
                         {
                             RotateLeft(parent);
                             node = parent;
                             parent = node.Parent;
                         }
-                        // Case 3 (line)
+                      
                         RotateRight(grandParent);
                         parent.IsRed = false;
                         grandParent.IsRed = true;
                         node = parent;
                     }
                 }
-                // Parent is RIGHT child of grandparent
+           
                 else
                 {
                     RBNode uncle = grandParent.Left;
 
-                    if (uncle?.IsRed == true)                     // Case 1
+                    if (uncle?.IsRed == true)                   
                     {
                         parent.IsRed = false;
                         uncle.IsRed = false;
@@ -139,13 +121,13 @@ namespace TESTER.Models
                     }
                     else
                     {
-                        if (node == parent.Left)                  // Case 2
+                        if (node == parent.Left)                 
                         {
                             RotateRight(parent);
                             node = parent;
                             parent = node.Parent;
                         }
-                        // Case 3
+                      
                         RotateLeft(grandParent);
                         parent.IsRed = false;
                         grandParent.IsRed = true;
@@ -153,12 +135,8 @@ namespace TESTER.Models
                     }
                 }
             }
-            _root.IsRed = false;        // root always black
+            _root.IsRed = false;      
         }
-
-        // ----------------------------------------------------------
-        // ROTATIONS
-        // ----------------------------------------------------------
         private void RotateLeft(RBNode x)
         {
             RBNode y = x.Right;

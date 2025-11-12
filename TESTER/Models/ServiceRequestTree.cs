@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace TESTER.Models
 {
+    //Service Request Tree
     public class ServiceRequestNode
     {
         public ServiceRequest Data;
@@ -39,7 +40,7 @@ namespace TESTER.Models
 
             int balance = GetBalance(node);
 
-            // Balance cases
+          
             if (balance > 1 && request.Id < node.Left.Data.Id) return RightRotate(node);
             if (balance < -1 && request.Id > node.Right.Data.Id) return LeftRotate(node);
             if (balance > 1 && request.Id > node.Left.Data.Id)

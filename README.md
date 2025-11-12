@@ -118,5 +118,18 @@ Service Requests Dashboard
 
 Overall user will be able to view requests by ID or priority, they will also be able to view all requests by location as all same location requests will be in the same table.
 
+------------------------------------------------------------------------------------
+AI Declaration
+what can be used to give a visualisation for a mVC App-https://chatgpt.com/share/6914e398-b948-8000-bf52-de52dd92e090
+
+Whats the purpose of data structures in an MVC app-https://chatgpt.com/share/6914e3d5-5188-8000-9c5d-eec430ac28bc
+
+How to implement Real Time Notifications-https://chatgpt.com/share/6914e342-ae14-8000-a393-f8eef72dc938
+
+
+
+
+
+
 
 

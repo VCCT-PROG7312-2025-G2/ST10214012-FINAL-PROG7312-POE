@@ -126,6 +126,8 @@ Whats the purpose of data structures in an MVC app-https://chatgpt.com/share/691
 
 How to implement Real Time Notifications-https://chatgpt.com/share/6914e342-ae14-8000-a393-f8eef72dc938
 
+What does a MST Tree do in an MVC app-https://chatgpt.com/share/6914e46e-44d8-8000-acbf-e12d0ff213e5
+
 
 
 

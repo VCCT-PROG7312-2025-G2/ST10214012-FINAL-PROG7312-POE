@@ -81,12 +81,22 @@ The user can perform the following actions:
 * Navigate to the **“Submit Request”** section.
 * Fill out the **Service Request Form** and click **Submit**.
   
-<img width="1247" height="1003" alt="Submit Service Request" src="https://github.com/user-attachments/assets/66c29f25-d8a2-42a7-b02d-0aa0f89784c7" />
+<img width="1246" height="957" alt="Submit Service Request" src="https://github.com/user-attachments/assets/ba0cab17-57f3-4008-83e6-1236072e06fd" />
 
 
-  
+
+*Once you submitted a few requests you can either view all requests or view requests by location
+
+
+<img width="1246" height="957" alt="Submit Service Request" src="https://github.com/user-attachments/assets/2f7767b2-c1b7-4e91-928d-3a57f6dd20f0" />
+
+*This is how it woould look if you click on view requests by location.
+ 
+<img width="1106" height="695" alt="Grouped by ocation requets" src="https://github.com/user-attachments/assets/7bb68e99-ad07-4e16-8a95-8fd2ba721e0f" />
+
+ 
 * To view your requests, go to **“View Submitted Requests”** in the navbar.
-* 
+  
 <img width="534" height="64" alt="ViewServiceRequestTab" src="https://github.com/user-attachments/assets/b81eeb26-f582-4c76-8b09-7f17c0029a6f" />
 
   

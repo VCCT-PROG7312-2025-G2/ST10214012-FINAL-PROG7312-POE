@@ -101,15 +101,22 @@ The user can perform the following actions:
 
   
 
-#### 5. Track Service Requests
+#### 5. Track/View Service Requests
+
+Service Requests Dashboard
+
+<img width="2059" height="868" alt="Service Requests dashboard" src="https://github.com/user-attachments/assets/6ea1de48-6cf1-44b4-bfb7-1068217cdd36" />
+
+*User will be able to switch from viewing requests from priority or ID
+
+<img width="2059" height="868" alt="Service Requests dashboard" src="https://github.com/user-attachments/assets/0fd35375-2987-4529-b45d-8328d817cc4b" />
+
 
 * Copy the **Request ID** and paste it into the **“Track by ID”** field.
-  
-<img width="892" height="439" alt="ViewServiceRequest TRACKER" src="https://github.com/user-attachments/assets/37a19120-d468-49af-8f7b-facf73df65f9" />
+* 
+  <img width="1790" height="948" alt="TRACK REQUESTS" src="https://github.com/user-attachments/assets/619c3e9c-edac-43fe-958b-80b58dfaf7af" />
 
-* The system will display the request’s current status.
-* Requests are automatically **sorted by priority** — 1 being highest, 5 being lowest.
-<img width="2556" height="570" alt="ViewServiceRequest" src="https://github.com/user-attachments/assets/9e3adf8a-8fac-4012-9fc0-3fd3f04a36ba" />
+Overall user will be able to view requests by ID or priority, they will also be able to view all requests by location as all same location requests will be in the same table.
 
 
 

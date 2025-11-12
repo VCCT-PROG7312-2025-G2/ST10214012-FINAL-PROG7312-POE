@@ -71,7 +71,8 @@ The user can perform the following actions:
 * Clicking on an event shows **recommended events** based on the user’s viewing history.
 * Users can **filter** events by **date** and **category**.
   
-<img width="2539" height="1217" alt="Events and announcements" src="https://github.com/user-attachments/assets/6e01b341-60b4-4944-b78c-30f146932e78" />
+<img width="2527" height="1246" alt="Events and Announcements" src="https://github.com/user-attachments/assets/1267d985-8199-49f5-a986-04da19a5faf1" />
+
 
   
 
@@ -80,7 +81,8 @@ The user can perform the following actions:
 * Navigate to the **“Submit Request”** section.
 * Fill out the **Service Request Form** and click **Submit**.
   
-<img width="2559" height="798" alt="Service requests" src="https://github.com/user-attachments/assets/64904737-5d89-4bdc-a5b2-28299066e11f" />
+<img width="1247" height="1003" alt="Submit Service Request" src="https://github.com/user-attachments/assets/66c29f25-d8a2-42a7-b02d-0aa0f89784c7" />
+
 
   
 * To view your requests, go to **“View Submitted Requests”** in the navbar.
